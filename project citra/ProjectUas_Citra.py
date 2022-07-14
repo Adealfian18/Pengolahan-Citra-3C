@@ -1,61 +1,7 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from tkinter import filedialog
-from tkinter import ttk
-from tkinter import*
 from PIL import ImageTk, Image
-
-def greyscale():
-    cv2.imshow("Greyscale", grey)
-    
-def tresholding():
-    cv2.imshow('Thresholded', thresh1)
-    
-def log():
-    cv2.imshow('LoG',laplacian1)
-    
-def histogram():
-    plt.show()
-    
-def uploadimage():
-    filename = filedialog.askopenfilename()
-    image = Image.open('daun.jfif')
-    image = image.resize([300, 300])
-    image = ImageTk.PhotoImage(image)
-    image_ = Label(app, image=image)
-    image_.place(x=140, y=70)
-
-def chckcombobox():
-    if combobox.get() == "Greyscale":
-        return greyscale()
-    elif combobox.get() == "Tresholding":
-        return tresholding()
-    elif combobox.get() == "Histogram":
-        return histogram()
-    elif combobox.get() == "LoG":
-        return log()
-        
-
-app = Tk()
-app.title("Segmentasi Citra")
-app.geometry("600x700")
-
-judul = Label(app, text="Segmentasi Citra", font=('Helvetica',20))
-judul.place(x=140, y=30)
-
-
-btn_upload = Button(app, text="Upload", command=uploadimage)
-btn_upload.place(x=140, y=60)
-
-btn_aplly = Button(app, text="apply", command=chckcombobox)
-btn_aplly.place(x=170, y=60)
-
-combobox = ttk.Combobox(app, width=15, values= ['Grayscale','Tresholding', 'LoG','Histogram'])
-combobox.place(x=140, y=80)
-
-
-
 
 #* read image
 image = cv2.imread('daun.jfif')
@@ -73,9 +19,6 @@ _, thresh1 = cv2.threshold(blurred, 127, 255,
 # show thresholded image
 
 image = cv2.imread("daun.jfif")
-
-#* display image
-cv2.imshow("image", image)
 
 # TODO : tuple untuk warna dari garis histogram
 colors = ("red", "green", "blue")
@@ -99,6 +42,10 @@ laplacian = cv2.Laplacian(blurred,cv2.CV_64F)
 # But this tends to localize the edge towards the brighter side.
 laplacian1 = laplacian/laplacian.max()
 
+cv2.imshow("image", image)
+cv2.imshow("Greyscale", grey)
+cv2.imshow('Thresholded', thresh1)
+cv2.imshow('LoG',laplacian1)
+plt.show()   
 
 cv2.waitKey(0)
-app.mainloop()
